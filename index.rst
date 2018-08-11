@@ -1,21 +1,12 @@
-Theorem Proving in Lean
-=======================
+Lean for hungry Graspers
+========================
 
 .. toctree::
     :numbered:
     :maxdepth: 2
 
     introduction
-    dependent_type_theory
-    propositions_and_proofs
-    quantifiers_and_equality
-    tactics
-    interacting_with_lean
-    inductive_types
-    induction_and_recursion
-    structures_and_records
-    type_classes
-    axioms_and_computation
+    functions_and_types
 
 .. Indices and tables
    ==================

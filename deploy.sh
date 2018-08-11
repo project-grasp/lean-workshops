@@ -6,7 +6,7 @@ if [ "$#" -ne 2 ]; then
 fi
 
 # Build
-make clean html latexpdf
+make clean html
 
 # 3. Deploy
 rm -rf deploy
@@ -14,7 +14,7 @@ mkdir deploy
 cd deploy
 git init
 cp -r ../_build/html/./ .
-cp ../_build/latex/theorem_proving_in_lean.pdf .
+#cp ../_build/latex/theorem_proving_in_lean.pdf .
 git add .
 git commit -m "Update `date`"
 git push git@github.com:$1/$2 +HEAD:gh-pages
