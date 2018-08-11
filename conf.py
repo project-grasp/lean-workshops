@@ -45,7 +45,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Lean for hungry Graspeers'
+project = u'Lean for hungry Graspers'
 copyright = u'2018, Adam Kurkiewicz'
 author = u'Workshop by Adam Kurkiewicz. Sphinx configuration files, syntax highlighting, icons, etc. cloned from a github project leanprover/theorem_proving_in_lean'
 
