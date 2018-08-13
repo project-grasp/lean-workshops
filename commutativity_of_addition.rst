@@ -18,7 +18,7 @@ But for now, let's focus on the task. Technically, it would seem we've already g
         | zero : natural
         | succ : natural → natural
 
-What this definition is telling us, is that all natural numbers are of two kinds. One kind is `zero` (boring, but important!). The other kind is successors (`succ`s), i.e. natural numbers which immediately follow another natural number (e.g. 4 or 42). Every natural number is of one kind or the other, and all natural numbers belong to one of the kinds. Whenever we introduce a new definition (e.g. `addition`), or try to construct a new proof (e.g. `a + b = b + a`), we will have to think about both kinds, `zero` and `succ`.
+What this definition is telling us, is that all natural numbers are of two kinds. One kind is `zero` (boring, but important!). The other kind is successors ("succs"), i.e. natural numbers which immediately follow another natural number (e.g. 4 or 42). Every natural number is of one kind or the other, and all natural numbers belong to one of the kinds. Whenever we introduce a new definition (e.g. `addition`), or try to construct a new proof (e.g. `a + b = b + a`), we will have to think about both kinds, `zero` and `succ`.
 
 Exercise
 ----------
@@ -38,14 +38,14 @@ Can you construct 2, 4 and 0?
 Defition of addition
 ---------------------
 
-Let's define addition now. We will have to use an important "magic" ingredient of inductive types: recursors. These are automatically generated for any inductive type, and are part of the low-level machinery, which gives lean both of the capabilities discussed in the introduction. We can use `natural.rec_on x` to prove or define things about `x`, as long as we're willing to assume that `x` can be either of a `zero` kind or of a `succ` kind. This is one good way to start defining addition:
+Let's define addition now. We will have to use an important "magic" ingredient of inductive types: recursors. These are automatically generated for any inductive type, and are part of the low-level machinery, which gives lean both of the capabilities discussed in the introduction. We can use `natural.rec_on x` to prove or define things about `x`, as long as we allow for the possiblity that `x` can be either of a `zero` kind or of a `succ` kind. This is one good way to start defining addition:
 
 .. code-block:: lean
 
     def addition_sorry_sorry (a : natural) (b : natural) : natural :=
         natural.rec_on b sorry sorry
 
-What's happening there is we're saying that we'll define addition by considering two separate cases, first case is when b is `zero`, and second case is when b is a `succ` of some other natural. In the first case things are really easy, if b is zero, the result of addition is simply `a`.
+What's happening there is that we'll define addition by considering two separate cases, first case is when b is `zero`, and second case, when b is a `succ` of some other natural. In the first case things are really easy, if b is zero, the result of addition is simply `a`.
 
 .. code-block:: lean
 
