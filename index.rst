@@ -8,6 +8,8 @@ Lean for hungry Graspers
     introduction
     functions_and_types
     propositions_as_types
+    commutativity_of_addition
+
     acknowledgements
 
 .. Indices and tables

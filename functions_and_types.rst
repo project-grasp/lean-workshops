@@ -1,6 +1,6 @@
 .. _functions_and_types:
 
-Functions and Types
+Functions and types
 ====================
 
 Exercise

@@ -6,7 +6,7 @@ Introduction
 Why lean is *different*
 -----------------------
 
-Programmers often brag about their favourite programming language X: "In X you can do it so easily". Maybe you can do it *easily* in X. But truth be told that, perhaps with a little bit more typing, you can also do it in Y, Z, W, and all other programming languages there are. Actually, this is called "Turing completeness", but let's not go into this rabbit hole just now.
+Programmers often brag about their favourite programming language X "In X you can do it so easily". Maybe you can do it *easily* in X. But truth be told that, perhaps with a little bit more typing, you can also do it in Y, Z, W, and all other programming languages there are. Actually, this is called "Turing completeness", but let's not go into this rabbit hole just now.
 
 `Lean <https://leanprover.github.io/about/>`_ really **is** different. You can use it to do things, which are basically impossible to do in an "ordinary" programming language. Specifically:
 

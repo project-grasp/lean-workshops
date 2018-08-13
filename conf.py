@@ -99,7 +99,7 @@ html_theme_options = {
     'font_family': 'Times New Roman, Times, serif',
     'head_font_family': 'Times New Roman, Times, serif',
     'code_bg': 'white',
-    'extra_nav_links': {'Lean Home':'https://leanprover.github.io/'},
+    'extra_nav_links': {'Theorem Proving in Lean':'https://leanprover.github.io/theorem_proving_in_lean/'},
     'sidebar_width' : '230px',
     # 'page_width' : '960px',
     # 'fixed_sidebar' : True
