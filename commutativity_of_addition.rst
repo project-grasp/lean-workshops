@@ -181,7 +181,7 @@ Hopefully this should be nice and easy. Just to check you have a correct underst
 Exercise
 ---------
 
-We need a couple of auxiliary theorems (often called lemmas), before we can show that `a + b = b + a`. I'm going to prove the first one. Don't worry if you don't understand it, recursing on `eq` is beyond the scope of this tutorial. Your job is to just tell me **what** it is I've proven (Hint: look at the type signature). 
+We need a couple of auxiliary theorems (often called lemmas), before we can show that `a + b = b + a`. I'm going to prove the first one. Don't worry if you don't understand it, recursing on `eq` is beyond the scope of this tutorial. Your job is to just tell me **what** it is that I've proven (Hint: look at the type signature). 
 
 .. code-block:: lean
 
@@ -191,7 +191,7 @@ We need a couple of auxiliary theorems (often called lemmas), before we can show
 Exercise
 ----------
 
-Remember the task where you were supposed to discover `eq.refl`? How could you use it to prove the following lemma:
+Remember the task where you were supposed to discover `eq.refl`? Could you use it to prove the following lemma?
 
 .. code-block:: lean
     
@@ -263,6 +263,9 @@ For the second, you will have to use a recursor.
         show nat.succ a + nat.succ prev_b = nat.succ (a + nat.succ prev_b), from
         have X : nat.succ (nat.succ a + prev_b) = nat.succ (nat.succ (a + prev_b)), from succ_over_equality IH,
         X)
+
+Exercise
+-----------
 
 And eventually, our final goal!
 
