@@ -1,0 +1,341 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ascii" />
+    <title>4. Commutativity of addition &#8212; Lean for hungry Graspers 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5. Acknowledgements" href="acknowledgements.html" />
+    <link rel="prev" title="3. Propositions as types" href="propositions_as_types.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="commutativity-of-addition">
+<span id="id1"></span><h1>4. Commutativity of addition<a class="headerlink" href="#commutativity-of-addition" title="Permalink to this headline">&#182;</a></h1>
+<div class="section" id="inductive-types">
+<h2>4.1. Inductive types<a class="headerlink" href="#inductive-types" title="Permalink to this headline">&#182;</a></h2>
+<p>Recall that our original motivation is proving that <cite>a + b = b + a</cite>. This property of addition is called &#8220;commutativity&#8221;, and if you decide to carry on with your mathematical education at University level, you&#8217;ll hear much more about.</p>
+<p>But for now, let&#8217;s focus on the task. Technically, it would seem we&#8217;ve already got all the required ingeredients to make progress. We know about <cite>eq</cite> or <cite>=</cite>. We know that <cite>a</cite> and <cite>b</cite> are of type <cite>nat</cite>. We know about <cite>+</cite>. However, it turns out that in order to prove <cite>a + b = b + a</cite>, we have to deepen our understanding of both <cite>nat</cite> and <cite>+</cite>. It turns out that <cite>nat</cite>, unlike corresponding concepts in other programming languages, is not primitive, i.e. it is defined in Lean using more fundamental concepts (specifically, inductive types). Let&#8217;s roll our own <cite>nat</cite>, and to avoid name clashing, let&#8217;s call it <cite>natural</cite>.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=inductive%20natural%20:%20Type%0A%20%20%20%20%7C%20zero%20:%20natural%0A%20%20%20%20%7C%20succ%20:%20natural%20%E2%86%92%20natural" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">inductive</span> <span class="n">natural</span> <span class="o">:</span> <span class="kt">Type</span>
+    <span class="bp">|</span> <span class="n">zero</span> <span class="o">:</span> <span class="n">natural</span>
+    <span class="bp">|</span> <span class="n">succ</span> <span class="o">:</span> <span class="n">natural</span> <span class="bp">&#8594;</span> <span class="n">natural</span>
+</pre></div>
+</div>
+</div><p>What this definition is telling us, is that all natural numbers are of two kinds. One kind is <cite>zero</cite> (boring, but important!). The other kind is successors (&#8220;succs&#8221;), i.e. natural numbers which immediately follow another natural number (e.g. 4 or 42). Every natural number is of one kind or the other, and all natural numbers belong to one of the kinds. Whenever we introduce a new definition (e.g. <cite>addition</cite>), or try to construct a new proof (e.g. <cite>a + b = b + a</cite>), we will have to think about both kinds, <cite>zero</cite> and <cite>succ</cite>.</p>
+</div>
+<div class="section" id="exercise">
+<h2>4.2. Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">&#182;</a></h2>
+<p>Although we still don&#8217;t know enough about inductive types to define <cite>addition</cite>, we can use <cite>natural</cite> to do something useful. Specifically, we can construct any number we want (given sufficient patience). This is how we can construct 3:</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=#check%20natural.succ%20(natural.succ%20(natural.succ%20natural.zero))" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="k">#check</span> <span class="n">natural.succ</span> <span class="o">(</span><span class="n">natural.succ</span> <span class="o">(</span><span class="n">natural.succ</span> <span class="n">natural.zero</span><span class="o">))</span>
+</pre></div>
+</div>
+</div><p>Can you construct 2, 4 and 0?</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20your%20construction%20of%202,%204%20and%200%20goes%20here." target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="c1">-- your construction of 2, 4 and 0 goes here.</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="defition-of-addition">
+<h2>4.3. Defition of addition<a class="headerlink" href="#defition-of-addition" title="Permalink to this headline">&#182;</a></h2>
+<p>Let&#8217;s define addition now. We will have to use an important &#8220;magic&#8221; ingredient of inductive types: recursors. These are automatically generated for any inductive type, and are part of the low-level machinery, which gives Lean both of the capabilities discussed in the introduction. We can use <cite>natural.rec_on x</cite> to prove or define things about <cite>x</cite>, as long as we allow for the possiblity that <cite>x</cite> can be either of a <cite>zero</cite> kind or of a <cite>succ</cite> kind. This is one good way to start defining addition:</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=def%20addition_sorry_sorry%20(a%20:%20natural)%20(b%20:%20natural)%20:%20natural%20:=%0A%20%20%20%20natural.rec_on%20b%20sorry%20sorry" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">addition_sorry_sorry</span> <span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">natural</span><span class="o">)</span> <span class="o">(</span><span class="n">b</span> <span class="o">:</span> <span class="n">natural</span><span class="o">)</span> <span class="o">:</span> <span class="n">natural</span> <span class="o">:=</span>
+    <span class="n">natural.rec_on</span> <span class="n">b</span> <span class="n">sorry</span> <span class="n">sorry</span>
+</pre></div>
+</div>
+</div><p>What&#8217;s happening there is that we&#8217;ll define addition by considering two separate cases, first case is when b is <cite>zero</cite>, and second case, when b is a <cite>succ</cite> of some other natural. In the first case things are really easy, if b is zero, the result of addition is simply <cite>a</cite>.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=def%20addition_sorry%20(a%20:%20natural)%20(b%20:%20natural)%20:%20natural%20:=%0A%20%20%20%20natural.rec_on%20b%20a%20sorry" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">addition_sorry</span> <span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">natural</span><span class="o">)</span> <span class="o">(</span><span class="n">b</span> <span class="o">:</span> <span class="n">natural</span><span class="o">)</span> <span class="o">:</span> <span class="n">natural</span> <span class="o">:=</span>
+    <span class="n">natural.rec_on</span> <span class="n">b</span> <span class="n">a</span> <span class="n">sorry</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id2">
+<h2>4.4. Exercise<a class="headerlink" href="#id2" title="Permalink to this headline">&#182;</a></h2>
+<p>Getting rid of the second sorry is harder. What can be of some help is replacing it with <cite>_</cite> and hovering over it with your pointer. This will tell you that you have to replace the underscore with a function typed <cite>natural &#8594; natural &#8594; natural</cite>. Just to make it really clear, this means a function with two arguments, both <a href="#id3"><span class="problematic" id="id4">`</span></a>nat`s, returing a nat. What this type signature fails to tell you is the meaning behind the first two arguments that the function accepts.</p>
+<p>The first argument is going to stand for, effectively <span class="math notranslate nohighlight">\(b - 1\)</span>. We can safely assume that one exists, because we&#8217;ve dealt with the <cite>zero</cite> case in the first sorry, and now we&#8217;re dealing with a situation, where <cite>b</cite> can be looked at as <cite>natural.succ prev_b</cite>. Let&#8217;s call this first argument <cite>prev_b</cite></p>
+<p>The second argument is a bit more magic. It&#8217;s called the &#8220;inductive hypothesis&#8221;, and it&#8217;s the result of feeding <cite>prev_b</cite> into our definition of addition. This can be very difficult to comprehend, but as usual, trying a couple of examples should help to develop understanding, and you&#8217;ll see a few more examples before the end of this tutorial. For now, let&#8217;s just call the second argument <cite>result_on_prev_b</cite>. From here it&#8217;s not hard to work out that what our definition has to return is <cite>natural.succ result_on_prev_b</cite>. Can you put all these details together into a working implementation of <cite>addition</cite>?</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0Adef%20addition%20(a%20:%20natural)%20(b%20:%20natural)%20:%20natural%20:=%0A%20%20%20%20natural.rec_on%20b%20a%20sorry%0A--%20END%0A%0Adef%20addition_solution%20(a%20:%20natural)%20(b%20:%20natural)%20:%20natural%20:=%0A%20%20%20%20natural.rec_on%20b%20a%20(%CE%BB%20(prev_b%20:%20natural)%20(result_on_prev_b%20:%20natural),%20natural.succ%20result_on_prev_b)%0A%0A#reduce%20addition%20(natural.succ%20(natural.succ%20natural.zero))%20(natural.succ%20natural.zero)" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">addition</span> <span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">natural</span><span class="o">)</span> <span class="o">(</span><span class="n">b</span> <span class="o">:</span> <span class="n">natural</span><span class="o">)</span> <span class="o">:</span> <span class="n">natural</span> <span class="o">:=</span>
+    <span class="n">natural.rec_on</span> <span class="n">b</span> <span class="n">a</span> <span class="n">sorry</span>
+</pre></div>
+</div>
+</div><p>Can you think of using <cite>#reduce</cite> to verify the correctness of your definition? Think about testing some simple things, such as 2 + 1.</p>
+</div>
+<div class="section" id="id5">
+<h2>4.5. Exercise<a class="headerlink" href="#id5" title="Permalink to this headline">&#182;</a></h2>
+<p>There is exactly one more good way to define addition (at least as far as I can tell!). This is to recurse on the first argument. Can you finish this definition and test that it works as expected using #reduce</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=def%20addition2%20(a%20:%20natural)%20(b%20:%20natural)%20:%20natural%20:=%0A%20%20%20%20natural.rec_on%20a%20sorry%20sorry" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">addition2</span> <span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">natural</span><span class="o">)</span> <span class="o">(</span><span class="n">b</span> <span class="o">:</span> <span class="n">natural</span><span class="o">)</span> <span class="o">:</span> <span class="n">natural</span> <span class="o">:=</span>
+    <span class="n">natural.rec_on</span> <span class="n">a</span> <span class="n">sorry</span> <span class="n">sorry</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="back-to-nat">
+<h2>4.6. Back to nat<a class="headerlink" href="#back-to-nat" title="Permalink to this headline">&#182;</a></h2>
+<p>The good news is that all these definitions are already provided in Lean, together with some syntactic sugar, such as allowing us to type <cite>a + b</cite> instead of <cite>addition a b</cite>, and use actual Hindu-Arabic numerals as opposed to chains of <cite>succ`s, so for the rest of the tutorial we can just revert back to the good old `nat</cite>.</p>
+<p>We can repeat our experiment with addition and <cite>#reduce</cite>, this time using more human-friendly notation. What is the most important observation you can take from this experiment?</p>
+</div>
+<div class="section" id="id6">
+<h2>4.7. Exercise<a class="headerlink" href="#id6" title="Permalink to this headline">&#182;</a></h2>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=#reduce%202%20+%200%0A#reduce%200%20+%202" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="k">#reduce</span> <span class="mi">2</span> <span class="bp">+</span> <span class="mi">0</span>
+<span class="k">#reduce</span> <span class="mi">0</span> <span class="bp">+</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id7">
+<h2>4.8. Exercise<a class="headerlink" href="#id7" title="Permalink to this headline">&#182;</a></h2>
+<p>There is a standard way to prove that two terms which reduce to the same term are equal. Can you find it yourself? This place might be helfpul: <a class="reference external" href="https://leanprover.github.io/theorem_proving_in_lean/quantifiers_and_equality.html#equality">https://leanprover.github.io/theorem_proving_in_lean/quantifiers_and_equality.html#equality</a>. Can you finish off the following proof?</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0A%0Adef%20two_plus_zero_equals_zero_plus_two%20:%202%20+%200%20=%200%20+%202%20:=%20sorry%0A%0A--%20END%0A%0Adef%20two_plus_zero_equals_zero_plus_two_solution%20:%202%20+%200%20=%200%20+%202%20:=%20rfl" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">two_plus_zero_equals_zero_plus_two</span> <span class="o">:</span> <span class="mi">2</span> <span class="bp">+</span> <span class="mi">0</span> <span class="bp">=</span> <span class="mi">0</span> <span class="bp">+</span> <span class="mi">2</span> <span class="o">:=</span> <span class="n">sorry</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id8">
+<h2>4.9. Exercise<a class="headerlink" href="#id8" title="Permalink to this headline">&#182;</a></h2>
+<p>Can you state the goal of the tutorial (to prove that a + b = b + a) using lean? You can call it <cite>addition_is_commutative</cite>. You won&#8217;t be able to prove it just now, so use <cite>sorry</cite> in place of the function definition.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20Your%20definition%20of%20%60addition_is_commutative%60%20comes%20here." target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="c1">-- Your definition of `addition_is_commutative` comes here.</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="the-have-and-the-show-keywords">
+<h2>4.10. The <cite>have</cite> and the <cite>show</cite> keywords<a class="headerlink" href="#the-have-and-the-show-keywords" title="Permalink to this headline">&#182;</a></h2>
+<p>There&#8217;s only one thing stopping you from writing long and complicated proofs (like the one of <cite>addition_is_commutative</cite>). While technically you know everything you might need to write them, as soon as you try to do it, you&#8217;ll realise that your proofs are becoming very long and ugly.</p>
+<p>Consider the following example:</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=variables%20a%20b%20c%20d%20e%20:%20nat%0A%0Avariable%20proof_b_eq_a%20:%20b%20=%20a%0Avariable%20proof_c_eq_b%20:%20c%20=%20b%0Avariable%20proof_c_eq_d%20:%20c%20=%20d%0Avariable%20proof_d_eq_e%20:%20d%20=%20e%0A%0A#check%20((eq.trans%20(eq.symm%20proof_b_eq_a)%20(eq.symm%20proof_c_eq_b)))%0A%0Adef%20proof_a_eq_e%20:%20a%20=%20e%20:=%20eq.trans%20(eq.trans%20(eq.trans%20(eq.symm%20proof_b_eq_a)%20(eq.symm%20proof_c_eq_b))%20proof_c_eq_d)%20proof_d_eq_e" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">variables</span> <span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="n">d</span> <span class="n">e</span> <span class="o">:</span> <span class="n">nat</span>
+
+<span class="kd">variable</span> <span class="n">proof_b_eq_a</span> <span class="o">:</span> <span class="n">b</span> <span class="bp">=</span> <span class="n">a</span>
+<span class="kd">variable</span> <span class="n">proof_c_eq_b</span> <span class="o">:</span> <span class="n">c</span> <span class="bp">=</span> <span class="n">b</span>
+<span class="kd">variable</span> <span class="n">proof_c_eq_d</span> <span class="o">:</span> <span class="n">c</span> <span class="bp">=</span> <span class="n">d</span>
+<span class="kd">variable</span> <span class="n">proof_d_eq_e</span> <span class="o">:</span> <span class="n">d</span> <span class="bp">=</span> <span class="n">e</span>
+
+<span class="k">#check</span> <span class="o">((</span><span class="n">eq.trans</span> <span class="o">(</span><span class="n">eq.symm</span> <span class="n">proof_b_eq_a</span><span class="o">)</span> <span class="o">(</span><span class="n">eq.symm</span> <span class="n">proof_c_eq_b</span><span class="o">)))</span>
+
+<span class="kd">def</span> <span class="n">proof_a_eq_e</span> <span class="o">:</span> <span class="n">a</span> <span class="bp">=</span> <span class="n">e</span> <span class="o">:=</span> <span class="n">eq.trans</span> <span class="o">(</span><span class="n">eq.trans</span> <span class="o">(</span><span class="n">eq.trans</span> <span class="o">(</span><span class="n">eq.symm</span> <span class="n">proof_b_eq_a</span><span class="o">)</span> <span class="o">(</span><span class="n">eq.symm</span> <span class="n">proof_c_eq_b</span><span class="o">))</span> <span class="n">proof_c_eq_d</span><span class="o">)</span> <span class="n">proof_d_eq_e</span>
+</pre></div>
+</div>
+</div><p>This example is not only horrible to read, it was also horrible to type. I had to cheat with <cite>#check</cite> a couple of times before I got it right.</p>
+<p>But how about this:</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=variables%20a%20b%20c%20d%20e%20:%20nat%0Avariable%20proof_b_eq_a%20:%20b%20=%20a%0Avariable%20proof_c_eq_b%20:%20c%20=%20b%0Avariable%20proof_c_eq_d%20:%20c%20=%20d%0Avariable%20proof_d_eq_e%20:%20d%20=%20e%0A%0Adef%20proof_a_eq_e%20:%20a%20=%20e%20:=%0A%20%20%20%20have%20proof_a_c%20:%20a%20=%20c,%20from%20eq.trans%20(eq.symm%20proof_b_eq_a)%20(eq.symm%20proof_c_eq_b),%0A%20%20%20%20have%20proof_a_d%20:%20a%20=%20d,%20from%20eq.trans%20proof_a_c%20proof_c_eq_d,%0A%20%20%20%20show%20a%20=%20e,%20from%20eq.trans%20proof_a_d%20proof_d_eq_e" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">variables</span> <span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="n">d</span> <span class="n">e</span> <span class="o">:</span> <span class="n">nat</span>
+<span class="kd">variable</span> <span class="n">proof_b_eq_a</span> <span class="o">:</span> <span class="n">b</span> <span class="bp">=</span> <span class="n">a</span>
+<span class="kd">variable</span> <span class="n">proof_c_eq_b</span> <span class="o">:</span> <span class="n">c</span> <span class="bp">=</span> <span class="n">b</span>
+<span class="kd">variable</span> <span class="n">proof_c_eq_d</span> <span class="o">:</span> <span class="n">c</span> <span class="bp">=</span> <span class="n">d</span>
+<span class="kd">variable</span> <span class="n">proof_d_eq_e</span> <span class="o">:</span> <span class="n">d</span> <span class="bp">=</span> <span class="n">e</span>
+
+<span class="kd">def</span> <span class="n">proof_a_eq_e</span> <span class="o">:</span> <span class="n">a</span> <span class="bp">=</span> <span class="n">e</span> <span class="o">:=</span>
+    <span class="k">have</span> <span class="n">proof_a_c</span> <span class="o">:</span> <span class="n">a</span> <span class="bp">=</span> <span class="n">c</span><span class="o">,</span> <span class="k">from</span> <span class="n">eq.trans</span> <span class="o">(</span><span class="n">eq.symm</span> <span class="n">proof_b_eq_a</span><span class="o">)</span> <span class="o">(</span><span class="n">eq.symm</span> <span class="n">proof_c_eq_b</span><span class="o">),</span>
+    <span class="k">have</span> <span class="n">proof_a_d</span> <span class="o">:</span> <span class="n">a</span> <span class="bp">=</span> <span class="n">d</span><span class="o">,</span> <span class="k">from</span> <span class="n">eq.trans</span> <span class="n">proof_a_c</span> <span class="n">proof_c_eq_d</span><span class="o">,</span>
+    <span class="k">show</span> <span class="n">a</span> <span class="bp">=</span> <span class="n">e</span><span class="o">,</span> <span class="k">from</span> <span class="n">eq.trans</span> <span class="n">proof_a_d</span> <span class="n">proof_d_eq_e</span>
+</pre></div>
+</div>
+</div><p>Hopefully this should be nice and easy. Just to check you have a correct understanding of <cite>show</cite> and <cite>have</cite>, can you break down the <cite>proof_a_c</cite> into two smaller steps: <cite>proof_a_b</cite>, <cite>proof_a_c</cite>.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=variables%20a%20b%20c%20d%20e%20:%20nat%0Avariable%20proof_b_eq_a%20:%20b%20=%20a%0Avariable%20proof_c_eq_b%20:%20c%20=%20b%0Avariable%20proof_c_eq_d%20:%20c%20=%20d%0Avariable%20proof_d_eq_e%20:%20d%20=%20e%0A%0Adef%20proof_a_eq_e%20:%20a%20=%20e%20:=%0A%20%20%20%20--%20modify%20the%20line%20below%0A%20%20%20%20have%20proof_a_c%20:%20a%20=%20c,%20from%20eq.trans%20(eq.symm%20proof_b_eq_a)%20(eq.symm%20proof_c_eq_b),%0A%20%20%20%20have%20proof_a_d%20:%20a%20=%20d,%20from%20eq.trans%20proof_a_c%20proof_c_eq_d,%0A%20%20%20%20show%20a%20=%20e,%20from%20eq.trans%20proof_a_d%20proof_d_eq_e" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">variables</span> <span class="n">a</span> <span class="n">b</span> <span class="n">c</span> <span class="n">d</span> <span class="n">e</span> <span class="o">:</span> <span class="n">nat</span>
+<span class="kd">variable</span> <span class="n">proof_b_eq_a</span> <span class="o">:</span> <span class="n">b</span> <span class="bp">=</span> <span class="n">a</span>
+<span class="kd">variable</span> <span class="n">proof_c_eq_b</span> <span class="o">:</span> <span class="n">c</span> <span class="bp">=</span> <span class="n">b</span>
+<span class="kd">variable</span> <span class="n">proof_c_eq_d</span> <span class="o">:</span> <span class="n">c</span> <span class="bp">=</span> <span class="n">d</span>
+<span class="kd">variable</span> <span class="n">proof_d_eq_e</span> <span class="o">:</span> <span class="n">d</span> <span class="bp">=</span> <span class="n">e</span>
+
+<span class="kd">def</span> <span class="n">proof_a_eq_e</span> <span class="o">:</span> <span class="n">a</span> <span class="bp">=</span> <span class="n">e</span> <span class="o">:=</span>
+    <span class="c1">-- modify the line below</span>
+    <span class="k">have</span> <span class="n">proof_a_c</span> <span class="o">:</span> <span class="n">a</span> <span class="bp">=</span> <span class="n">c</span><span class="o">,</span> <span class="k">from</span> <span class="n">eq.trans</span> <span class="o">(</span><span class="n">eq.symm</span> <span class="n">proof_b_eq_a</span><span class="o">)</span> <span class="o">(</span><span class="n">eq.symm</span> <span class="n">proof_c_eq_b</span><span class="o">),</span>
+    <span class="k">have</span> <span class="n">proof_a_d</span> <span class="o">:</span> <span class="n">a</span> <span class="bp">=</span> <span class="n">d</span><span class="o">,</span> <span class="k">from</span> <span class="n">eq.trans</span> <span class="n">proof_a_c</span> <span class="n">proof_c_eq_d</span><span class="o">,</span>
+    <span class="k">show</span> <span class="n">a</span> <span class="bp">=</span> <span class="n">e</span><span class="o">,</span> <span class="k">from</span> <span class="n">eq.trans</span> <span class="n">proof_a_d</span> <span class="n">proof_d_eq_e</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id9">
+<h2>4.11. Exercise<a class="headerlink" href="#id9" title="Permalink to this headline">&#182;</a></h2>
+<p>We need a couple of auxiliary theorems (often called lemmas), before we can show that <cite>a + b = b + a</cite>. I&#8217;m going to prove the first one. Don&#8217;t worry if you don&#8217;t understand it, recursing on <cite>eq</cite> is beyond the scope of this tutorial. Your job is to just tell me <strong>what</strong> it is that I&#8217;ve proven (Hint: look at the type signature).</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=def%20succ_over_equality%20%7Ba%20b%20:%20nat%7D%20(H%20:%20a%20=%20b)%20:%20(nat.succ%20a)%20=%20(nat.succ%20b)%20:=%0A%20%20%20%20eq.rec_on%20H%20(eq.refl%20(nat.succ%20a))" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">succ_over_equality</span> <span class="o">{</span><span class="n">a</span> <span class="n">b</span> <span class="o">:</span> <span class="n">nat</span><span class="o">}</span> <span class="o">(</span><span class="n">H</span> <span class="o">:</span> <span class="n">a</span> <span class="bp">=</span> <span class="n">b</span><span class="o">)</span> <span class="o">:</span> <span class="o">(</span><span class="n">nat.succ</span> <span class="n">a</span><span class="o">)</span> <span class="bp">=</span> <span class="o">(</span><span class="n">nat.succ</span> <span class="n">b</span><span class="o">)</span> <span class="o">:=</span>
+    <span class="n">eq.rec_on</span> <span class="n">H</span> <span class="o">(</span><span class="n">eq.refl</span> <span class="o">(</span><span class="n">nat.succ</span> <span class="n">a</span><span class="o">))</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id10">
+<h2>4.12. Exercise<a class="headerlink" href="#id10" title="Permalink to this headline">&#182;</a></h2>
+<p>Remember the task where you were supposed to discover <cite>eq.refl</cite>? Could you use it to prove the following lemma?</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0Adef%20add_zero_right%20(a%20:%20nat)%20:%20a%20+%200%20=%20a%20:=%0A%20%20%20%20sorry%0A--%20END%0Adef%20add_zero_right_solution%20(a%20:%20nat)%20:%20a%20+%200%20=%20a%20:=%0A%20%20%20%20rfl" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">add_zero_right</span> <span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">nat</span><span class="o">)</span> <span class="o">:</span> <span class="n">a</span> <span class="bp">+</span> <span class="mi">0</span> <span class="bp">=</span> <span class="n">a</span> <span class="o">:=</span>
+    <span class="n">sorry</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id11">
+<h2>4.13. Exercise<a class="headerlink" href="#id11" title="Permalink to this headline">&#182;</a></h2>
+<p>It&#8217;s actually much harder to prove the &#8220;left&#8221; version of the lemma. But I&#8217;ll get you started.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0Adef%20add_zero_left%20(a%20:%20nat)%20:%200%20+%20a%20=%20a%20:=%0A%20%20%20%20nat.rec_on%20a%20rfl%20(%CE%BB%20prev_a%20:%20nat,%20%CE%BB%20IH%20:%200%20+%20prev_a%20=%20prev_a,%0A%20%20%20%20%20%20%20%20sorry)%0A--%20END%0A%0Adef%20add_zero_left_solution%20(a%20:%20nat)%20:%200%20+%20a%20=%20a%20:=%0A%20%20%20%20nat.rec_on%20a%20rfl%20(%CE%BB%20prev_a%20:%20nat,%20%CE%BB%20IH%20:%200%20+%20prev_a%20=%20prev_a,%0A%20%20%20%20%20%20%20%20have%20X%20:%20nat.succ%20(0%20+%20prev_a)%20=%20(nat.succ%20prev_a),%20from%20succ_over_equality%20IH,%0A%20%20%20%20%20%20%20%20have%20Y%20:%20nat.succ%20(0%20+%20prev_a)%20=%20(0%20+%20(nat.succ%20prev_a)),%20from%20rfl,%0A%20%20%20%20%20%20%20%20eq.trans%20(eq.symm%20Y)%20X)" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">add_zero_left</span> <span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">nat</span><span class="o">)</span> <span class="o">:</span> <span class="mi">0</span> <span class="bp">+</span> <span class="n">a</span> <span class="bp">=</span> <span class="n">a</span> <span class="o">:=</span>
+    <span class="n">nat.rec_on</span> <span class="n">a</span> <span class="n">rfl</span> <span class="o">(</span><span class="bp">&#955;</span> <span class="n">prev_a</span> <span class="o">:</span> <span class="n">nat</span><span class="o">,</span> <span class="bp">&#955;</span> <span class="n">IH</span> <span class="o">:</span> <span class="mi">0</span> <span class="bp">+</span> <span class="n">prev_a</span> <span class="bp">=</span> <span class="n">prev_a</span><span class="o">,</span>
+        <span class="n">sorry</span><span class="o">)</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id12">
+<h2>4.14. Exercise<a class="headerlink" href="#id12" title="Permalink to this headline">&#182;</a></h2>
+<p>Can you prove that <cite>0 + a = a + 0</cite>, using your code for <cite>add_zero_left</cite> and <cite>add_zero_right</cite>?</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0Adef%20addition_is_commutative_base_case_solution%20(a%20b%20:%20nat):%20(a%20+%200)%20=%20(0%20+%20a)%20:=%20sorry%0A--%20END%0A%0Adef%20addition_is_commutative_base_case_solution%20(a%20b%20:%20nat):%20(a%20+%200)%20=%20(0%20+%20a)%20:=%20eq.trans%20(add_zero_right%20a)%20(eq.symm%20(add_zero_left%20a))" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">addition_is_commutative_base_case_solution</span> <span class="o">(</span><span class="n">a</span> <span class="n">b</span> <span class="o">:</span> <span class="n">nat</span><span class="o">):</span> <span class="o">(</span><span class="n">a</span> <span class="bp">+</span> <span class="mi">0</span><span class="o">)</span> <span class="bp">=</span> <span class="o">(</span><span class="mi">0</span> <span class="bp">+</span> <span class="n">a</span><span class="o">)</span> <span class="o">:=</span> <span class="n">sorry</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id13">
+<h2>4.15. Exercise<a class="headerlink" href="#id13" title="Permalink to this headline">&#182;</a></h2>
+<p>Can you prove the following two lemmas? The first one is very easy.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0Adef%20successor_over_sum%20(a%20:%20nat)%20(b%20:%20nat)%20:%20a%20+%20nat.succ%20b%20=%20nat.succ%20(a%20+%20b)%20:=%20sorry%0A--%20END%0A%0Adef%20successor_over_sum_solution%20(a%20:%20nat)%20(b%20:%20nat)%20:%20a%20+%20nat.succ%20b%20=%20nat.succ%20(a%20+%20b)%20:=%20rfl" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">successor_over_sum</span> <span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">nat</span><span class="o">)</span> <span class="o">(</span><span class="n">b</span> <span class="o">:</span> <span class="n">nat</span><span class="o">)</span> <span class="o">:</span> <span class="n">a</span> <span class="bp">+</span> <span class="n">nat.succ</span> <span class="n">b</span> <span class="bp">=</span> <span class="n">nat.succ</span> <span class="o">(</span><span class="n">a</span> <span class="bp">+</span> <span class="n">b</span><span class="o">)</span> <span class="o">:=</span> <span class="n">sorry</span>
+</pre></div>
+</div>
+</div><p>For the second, you will have to use a recursor.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0Adef%20successor_over_sum2%20(a%20:%20nat)%20(b%20:%20nat)%20:%20(nat.succ%20a)%20+%20b%20=%20nat.succ%20(a%20+%20b)%20:=%0A%20%20%20%20sorry%0A--%20END%0A%0Adef%20successor_over_sum2_solution%20(a%20:%20nat)%20(b%20:%20nat)%20:%20(nat.succ%20a)%20+%20b%20=%20nat.succ%20(a%20+%20b)%20:=%0Anat.rec_on%20b%20rfl%20(%CE%BB%20prev_b,%20%CE%BB%20IH%20:%20nat.succ%20a%20+%20prev_b%20=%20nat.succ%20(a%20+%20prev_b),%0A%20%20%20%20show%20nat.succ%20a%20+%20nat.succ%20prev_b%20=%20nat.succ%20(a%20+%20nat.succ%20prev_b),%20from%0A%20%20%20%20have%20X%20:%20nat.succ%20(nat.succ%20a%20+%20prev_b)%20=%20nat.succ%20(nat.succ%20(a%20+%20prev_b)),%20from%20succ_over_equality%20IH,%0A%20%20%20%20X)" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">successor_over_sum2</span> <span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">nat</span><span class="o">)</span> <span class="o">(</span><span class="n">b</span> <span class="o">:</span> <span class="n">nat</span><span class="o">)</span> <span class="o">:</span> <span class="o">(</span><span class="n">nat.succ</span> <span class="n">a</span><span class="o">)</span> <span class="bp">+</span> <span class="n">b</span> <span class="bp">=</span> <span class="n">nat.succ</span> <span class="o">(</span><span class="n">a</span> <span class="bp">+</span> <span class="n">b</span><span class="o">)</span> <span class="o">:=</span>
+    <span class="n">sorry</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id14">
+<h2>4.16. Exercise<a class="headerlink" href="#id14" title="Permalink to this headline">&#182;</a></h2>
+<p>And eventually, our final goal!</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0Adef%20addition_is_commutative%20(a%20b%20:%20nat)%20a%20+%20b%20=%20b%20+%20a%20:=%20sorry%0A--%20END%0A%0Adef%20addition_is_commutative_solution%20(a%20b%20:%20nat)%20:%20a%20+%20b%20=%20b%20+%20a%20:=%0A%20%20%20%20nat.rec_on%20b%0A%20%20%20%20%20%20%20%20(addition_is_commutative_base_case%20a%20b)%0A%20%20%20%20%20%20%20%20(%CE%BB%20prev_a,%20%CE%BB%20H%20:%20a%20+%20prev_a%20=%20prev_a%20+%20a,%0A%20%20%20%20%20%20%20%20show%20a%20+%20nat.succ%20prev_a%20=%20nat.succ%20prev_a%20+%20a,%20from%0A%20%20%20%20%20%20%20%20have%20X%20:%20a%20+%20nat.succ%20prev_a%20=%20nat.succ%20(a%20+%20prev_a),%20from%20successor_over_sum%20a%20prev_a,%0A%20%20%20%20%20%20%20%20have%20Y%20:%20(nat.succ%20prev_a)%20+%20a%20=%20nat.succ%20(prev_a%20+%20a),%20from%20successor_over_sum2%20prev_a%20a,%0A%20%20%20%20%20%20%20%20have%20Z%20:%20nat.succ%20(a%20+%20prev_a)%20=%20nat.succ%20(prev_a%20+%20a),%20from%20succ_over_equality%20H,%0A%20%20%20%20%20%20%20%20(eq.trans%20(eq.trans%20X%20Z)%20(eq.symm%20Y)))" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">addition_is_commutative</span> <span class="o">(</span><span class="n">a</span> <span class="n">b</span> <span class="o">:</span> <span class="n">nat</span><span class="o">)</span> <span class="n">a</span> <span class="bp">+</span> <span class="n">b</span> <span class="bp">=</span> <span class="n">b</span> <span class="bp">+</span> <span class="n">a</span> <span class="o">:=</span> <span class="n">sorry</span>
+</pre></div>
+</div>
+</div></div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Lean for hungry Graspers</a></h1>
+
+
+
+
+
+
+
+
+<!-- <h3>Navigation</h3> -->
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions_and_types.html">2. Functions and types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="propositions_as_types.html">3. Propositions as types</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. Commutativity of addition</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#inductive-types">4.1. Inductive types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercise">4.2. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#defition-of-addition">4.3. Defition of addition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">4.4. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">4.5. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#back-to-nat">4.6. Back to nat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">4.7. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">4.8. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">4.9. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-have-and-the-show-keywords">4.10. The <cite>have</cite> and the <cite>show</cite> keywords</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">4.11. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">4.12. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">4.13. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">4.14. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">4.15. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id14">4.16. Exercise</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">5. Acknowledgements</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://leanprover.github.io/theorem_proving_in_lean/">Theorem Proving in Lean</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Adam Kurkiewicz. This work is licensed under a Creative Commons Attribution 4.0 International License.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="_sources/commutativity_of_addition.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

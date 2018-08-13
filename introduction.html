@@ -1,0 +1,122 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ascii" />
+    <title>1. Introduction &#8212; Lean for hungry Graspers 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. Functions and types" href="functions_and_types.html" />
+    <link rel="prev" title="Lean for hungry Graspers" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<span id="id1"></span><h1>1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">&#182;</a></h1>
+<div class="section" id="why-lean-is-different">
+<h2>1.1. Why Lean is <em>different</em><a class="headerlink" href="#why-lean-is-different" title="Permalink to this headline">&#182;</a></h2>
+<p>Programmers often brag about their favourite programming language X &#8220;In X you can do it so easily&#8221;. Maybe you can do it <em>easily</em> in X. But truth be told that, perhaps with a little bit more typing, you can also do it in Y, Z, W, and all other programming languages there are. Actually, this is called &#8220;Turing completeness&#8221;, but let&#8217;s not go into this rabbit hole just now.</p>
+<p><a class="reference external" href="https://leanprover.github.io/about/">Lean</a> really <strong>is</strong> different. You can use it to do things, which are basically impossible to do in an &#8220;ordinary&#8221; programming language. Specifically:</p>
+<ol class="arabic simple">
+<li>You can encode mathematical proofs as computer programs.</li>
+<li>You can supply functions in your computer programs with impeccable type signatures. If your type signature says that your function is sorting a list, it is sorting a list, period (or you&#8217;ve found a bug in Lean!).</li>
+</ol>
+<p>Somewhat incredibly, Lean&#8217;s first capability is actually achieved through a clever &#8220;thought experiment&#8221; on top of the second capability. To make it work, we will have to <strong>agree</strong> that mathematical proofs are special kinds of type signatures. The proofs will be the functions implementing those type signatures.</p>
+<p>Before we get started, we need a motivating example. Here it goes: in this tutorial we&#8217;re going to prove, using Lean, that if <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> are natural numbers, then <span class="math notranslate nohighlight">\(a + b = b + a\)</span>. Why is this a big deal? As you&#8217;re going to realise, we&#8217;re going to be working at a very low level of detail, lower than any mathematics you&#8217;ve ever done before. People often refer to it as &#8220;mathematical foundations&#8221;, but all we will have to worry about is types and functions.</p>
+<p>Let&#8217;s get started.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Lean for hungry Graspers</a></h1>
+
+
+
+
+
+
+
+
+<!-- <h3>Navigation</h3> -->
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#why-lean-is-different">1.1. Why Lean is <em>different</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functions_and_types.html">2. Functions and types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="propositions_as_types.html">3. Propositions as types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commutativity_of_addition.html">4. Commutativity of addition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">5. Acknowledgements</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://leanprover.github.io/theorem_proving_in_lean/">Theorem Proving in Lean</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Adam Kurkiewicz. This work is licensed under a Creative Commons Attribution 4.0 International License.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="_sources/introduction.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

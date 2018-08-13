@@ -1,0 +1,221 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ascii" />
+    <title>2. Functions and types &#8212; Lean for hungry Graspers 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. Propositions as types" href="propositions_as_types.html" />
+    <link rel="prev" title="1. Introduction" href="introduction.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="functions-and-types">
+<span id="id1"></span><h1>2. Functions and types<a class="headerlink" href="#functions-and-types" title="Permalink to this headline">&#182;</a></h1>
+<div class="section" id="exercise">
+<h2>2.1. Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">&#182;</a></h2>
+<p>Like almost any programming language, Lean has functions.</p>
+<p><cite>double</cite> for example is a function. When you&#8217;re ready, press <cite>try it!</cite> in the top-right corner of the code box below. What you should see is an interactive Lean session. You can use for the the rest of the workshop.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20Warning!%20It%20can%20take%20a%20minute%20or%20so%0A--%20to%20load%20up%20lean%20in%20your%20browser.%0A%0A--%20BEGIN%0Adef%20double%20:%20nat%20%E2%86%92%20nat%20:=%0A%20%20%20%20%CE%BB%20a%20:%20nat,%20a%20+%20a%0A--%20END%0A%0A%0A--%20Spoiler%20alert!%20By%20pressing%20%22try%20it!%22%0A--%20you'll%20always%20see%20the%20solution.%20If%0A--%20you%20wand%20to%20avoid%20this%20(as%20you%20should,%0A--%20within%20reason!),%20copy%20and%20paste%20the%0A--%20code%20from%20the%20tutorial%20into%20an%20active%0A--%20lean%20session,%20and%20use%20the%20%22try%20it!%22%0A--%20button%20only%20when%20you%20get%20stuck." target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">double</span> <span class="o">:</span> <span class="n">nat</span> <span class="bp">&#8594;</span> <span class="n">nat</span> <span class="o">:=</span>
+    <span class="bp">&#955;</span> <span class="n">a</span> <span class="o">:</span> <span class="n">nat</span><span class="o">,</span> <span class="n">a</span> <span class="bp">+</span> <span class="n">a</span>
+</pre></div>
+</div>
+</div><p><cite>nat &#8594; nat</cite> is the function&#8217;s type signature. It means that <cite>double</cite> accepts a non-negative integer (we&#8217;ll call those &#8220;nat&#8221;) and it produces another nat.</p>
+<p>It&#8217;s possible to use <cite>def</cite> to create simpler &#8220;functions&#8221;, which we should really call &#8220;constants&#8221;</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=def%20purpose_of_life%20:%20nat%20:=%2042" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">purpose_of_life</span> <span class="o">:</span> <span class="n">nat</span> <span class="o">:=</span> <span class="mi">42</span>
+</pre></div>
+</div>
+</div><p>What is the type signature of <cite>purpose_of_life</cite>?</p>
+</div>
+<div class="section" id="id2">
+<h2>2.2. Exercise<a class="headerlink" href="#id2" title="Permalink to this headline">&#182;</a></h2>
+<p>Can you feed some nats into <cite>double</cite> and see what happens (hopefully nothing too surprising!). You&#8217;ll have to use <cite>#reduce func_name argument</cite> to actually see the output of the function.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=def%20double%20:%20nat%20%E2%86%92%20nat%20:=%0A%20%20%20%20%CE%BB%20a%20:%20nat,%20a%20+%20a%0A--%20your%20code%20goes%20here%0A#reduce%20double%202" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">double</span> <span class="o">:</span> <span class="n">nat</span> <span class="bp">&#8594;</span> <span class="n">nat</span> <span class="o">:=</span>
+    <span class="bp">&#955;</span> <span class="n">a</span> <span class="o">:</span> <span class="n">nat</span><span class="o">,</span> <span class="n">a</span> <span class="bp">+</span> <span class="n">a</span>
+<span class="c1">-- your code goes here</span>
+<span class="k">#reduce</span> <span class="n">double</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id3">
+<h2>2.3. Exercise<a class="headerlink" href="#id3" title="Permalink to this headline">&#182;</a></h2>
+<p>Can you use <cite>#check</cite> to check the type signature of <cite>double</cite>? Is it what you&#8217;ve expected? What&#8217;s the type signature of <cite>double 2</cite>?.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0Adef%20double%20:%20nat%20%E2%86%92%20nat%20:=%0A%20%20%20%20%CE%BB%20a%20:%20nat,%20a%20+%20a%0A%0A--%20check%20the%20type%20signatures%20here%0A--%20END%0A#check%20double" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">double</span> <span class="o">:</span> <span class="n">nat</span> <span class="bp">&#8594;</span> <span class="n">nat</span> <span class="o">:=</span>
+    <span class="bp">&#955;</span> <span class="n">a</span> <span class="o">:</span> <span class="n">nat</span><span class="o">,</span> <span class="n">a</span> <span class="bp">+</span> <span class="n">a</span>
+
+<span class="c1">-- check the type signatures here</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id4">
+<h2>2.4. Exercise<a class="headerlink" href="#id4" title="Permalink to this headline">&#182;</a></h2>
+<p>Can you make <cite>triple_first_and_add</cite> into a function, which takes two arguments, <cite>a</cite> and <cite>b</cite> and produces a sum of a triple of <cite>a</cite> and a <cite>b</cite>?</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0Adef%20triple_first_and_add%20:%20nat%20%E2%86%92%20nat%20%E2%86%92%20nat%20:=%0A%20%20%20%20%CE%BB%20a%20:%20nat,%20%CE%BB%20b%20:%20nat,%20sorry%0A--%20END%0Adef%20triple_first_and_add_solution%20:%20nat%20%E2%86%92%20nat%20%E2%86%92%20nat%20:=%0A%20%20%20%20%CE%BB%20a%20:%20nat,%20%CE%BB%20b%20:%20nat,%203%20*%20a%20+%203%20*%20b" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">triple_first_and_add</span> <span class="o">:</span> <span class="n">nat</span> <span class="bp">&#8594;</span> <span class="n">nat</span> <span class="bp">&#8594;</span> <span class="n">nat</span> <span class="o">:=</span>
+    <span class="bp">&#955;</span> <span class="n">a</span> <span class="o">:</span> <span class="n">nat</span><span class="o">,</span> <span class="bp">&#955;</span> <span class="n">b</span> <span class="o">:</span> <span class="n">nat</span><span class="o">,</span> <span class="n">sorry</span>
+</pre></div>
+</div>
+</div><p>If you&#8217;re lazy to type &#955; (lambda and press enter), there&#8217;s a shortcut:</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0Adef%20triple_first_and_add2%20:%20nat%20%E2%86%92%20nat%20%E2%86%92%20nat%20:=%0A%20%20%20%20%CE%BB%20a%20b%20:%20nat,%20sorry%0A--%20END%0Adef%20triple_first_and_add2_solution%20:%20nat%20%E2%86%92%20nat%20%E2%86%92%20nat%20:=%0A%20%20%20%20%CE%BB%20a%20b%20:%20nat,%203%20*%20a%20+%203%20*%20b" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">triple_first_and_add2</span> <span class="o">:</span> <span class="n">nat</span> <span class="bp">&#8594;</span> <span class="n">nat</span> <span class="bp">&#8594;</span> <span class="n">nat</span> <span class="o">:=</span>
+    <span class="bp">&#955;</span> <span class="n">a</span> <span class="n">b</span> <span class="o">:</span> <span class="n">nat</span><span class="o">,</span> <span class="n">sorry</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id5">
+<h2>2.5. Exercise<a class="headerlink" href="#id5" title="Permalink to this headline">&#182;</a></h2>
+<p>Can you check the type signature of the expression <cite>triple_first_and_add 42</cite> (Warning, that&#8217;s a loaded question)? What do you expect it to be? What do you expect it to evaluate to when evaluated with <cite>#reduce</cite>?</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0A--%20your%20code%20checks%20go%20here%0A--%20END%0A#check%20triple_first_and_add%2042" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="c1">-- your code checks go here</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id6">
+<h2>2.6. Exercise<a class="headerlink" href="#id6" title="Permalink to this headline">&#182;</a></h2>
+<p>What does the function <cite>double_and_double</cite> do? Can you confirm with <cite>#reduce</cite>? Can you think of a different way to implement this function?</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0Adef%20double_and_double%20:%20nat%20%E2%86%92%20nat%20:=%0A%20%20%20%20%CE%BB%20a%20:%20nat,%20(a%20+%20a)%20+%20(a%20+%20a)%0A%0A--%20check%20the%20behaviour%20of%20%60double_and_double%60%20with%20%60#reduce%60%20here.%0A%0A--%20alternative%20implementation%20of%20%60double_and_double%60%20goes%20here.%0A--%20END%0A%0A#reduce%20double_and_double%204" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">double_and_double</span> <span class="o">:</span> <span class="n">nat</span> <span class="bp">&#8594;</span> <span class="n">nat</span> <span class="o">:=</span>
+    <span class="bp">&#955;</span> <span class="n">a</span> <span class="o">:</span> <span class="n">nat</span><span class="o">,</span> <span class="o">(</span><span class="n">a</span> <span class="bp">+</span> <span class="n">a</span><span class="o">)</span> <span class="bp">+</span> <span class="o">(</span><span class="n">a</span> <span class="bp">+</span> <span class="n">a</span><span class="o">)</span>
+
+<span class="c1">-- check the behaviour of `double_and_double` with `#reduce` here.</span>
+
+<span class="c1">-- alternative implementation of `double_and_double` goes here.</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id7">
+<h2>2.7. Exercise<a class="headerlink" href="#id7" title="Permalink to this headline">&#182;</a></h2>
+<p>Have you heard about function composition? Could you implement a <cite>doubler</cite>, a function, which takes a function, let&#8217;s call it the <cite>input_function</cite> and produces another function, let&#8217;s call it the <cite>output_function</cite>, which takes in an argument, passes it through the <cite>input_function</cite>, takes the result, and again passes it through the input function.</p>
+<p>Honest warning: this is difficult and not worth spending more than 20 minutes on. You can always see a solution by pressing the &#8220;try it!&#8221; link in the top right corner of the code box. You should spend at least 5-10 minutes trying to do this before giving up.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0Adef%20doubler%20:%20(nat%20%E2%86%92%20nat)%20%E2%86%92%20(nat%20%E2%86%92%20nat)%20:=%0A%20%20%20%20sorry%0A--%20END%0A%0Adef%20doubler_solution%20:%20(nat%20%E2%86%92%20nat)%20%E2%86%92%20(nat%20%E2%86%92%20nat)%20:=%0A%20%20%20%20%CE%BB%20input_function%20:%20(nat%20%E2%86%92%20nat),%0A%20%20%20%20%CE%BB%20argument%20%20:%20nat,%20input_function%20(input_function%20argument)" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">doubler</span> <span class="o">:</span> <span class="o">(</span><span class="n">nat</span> <span class="bp">&#8594;</span> <span class="n">nat</span><span class="o">)</span> <span class="bp">&#8594;</span> <span class="o">(</span><span class="n">nat</span> <span class="bp">&#8594;</span> <span class="n">nat</span><span class="o">)</span> <span class="o">:=</span>
+    <span class="n">sorry</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id8">
+<h2>2.8. Exercise<a class="headerlink" href="#id8" title="Permalink to this headline">&#182;</a></h2>
+<p>Can you use your implementation of <cite>doubler</cite> to again implement <cite>double_and_double</cite>? How about <cite>triple_and_double</cite>?</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0Adef%20double_and_double_with_doubler%20:%20nat%20%E2%86%92%20nat:=%0A%20%20%20%20sorry%0A--%20END%0Adef%20double_and_double_with_doubler_solution%20:%20nat%20%E2%86%92%20nat:=%0A%20%20%20%20%CE%BB%20a%20:%20nat,%20doubler_solution%20double%20a%0A%0A#reduce%20double_and_double_with_doubler_solution%202" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">double_and_double_with_doubler</span> <span class="o">:</span> <span class="n">nat</span> <span class="bp">&#8594;</span> <span class="n">nat</span><span class="o">:=</span>
+    <span class="n">sorry</span>
+</pre></div>
+</div>
+</div></div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Lean for hungry Graspers</a></h1>
+
+
+
+
+
+
+
+
+<!-- <h3>Navigation</h3> -->
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. Functions and types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#exercise">2.1. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.2. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2.3. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">2.4. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">2.5. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">2.6. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">2.7. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">2.8. Exercise</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="propositions_as_types.html">3. Propositions as types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commutativity_of_addition.html">4. Commutativity of addition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">5. Acknowledgements</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://leanprover.github.io/theorem_proving_in_lean/">Theorem Proving in Lean</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Adam Kurkiewicz. This work is licensed under a Creative Commons Attribution 4.0 International License.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="_sources/functions_and_types.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

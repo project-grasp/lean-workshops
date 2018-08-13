@@ -1,0 +1,281 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ascii" />
+    <title>3. Propositions as types &#8212; Lean for hungry Graspers 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. Commutativity of addition" href="commutativity_of_addition.html" />
+    <link rel="prev" title="2. Functions and types" href="functions_and_types.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="propositions-as-types">
+<span id="id1"></span><h1>3. Propositions as types<a class="headerlink" href="#propositions-as-types" title="Permalink to this headline">&#182;</a></h1>
+<div class="section" id="named-values-in-type-signatures">
+<h2>3.1. Named values in type signatures<a class="headerlink" href="#named-values-in-type-signatures" title="Permalink to this headline">&#182;</a></h2>
+<p>In the previous section you&#8217;ve seen some basic usage of lean, which revealed lean as a functional programming language, not unlike Haskell. If you end up doing Computer Science at Edinburgh, you&#8217;ll get to know functional programming very well right from the beginning (in Glasgow you have to wait until the end of your degree to pick it up as an elective). But let&#8217;s look at what makes lean different. As you might have realised by now, you can use <cite>#check</cite> to see the type of an unnamed function like this:</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=#check%20(%CE%BB%20(a%20:%20nat),%20a%20+%20a)" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="k">#check</span> <span class="o">(</span><span class="bp">&#955;</span> <span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">nat</span><span class="o">),</span> <span class="n">a</span> <span class="bp">+</span> <span class="n">a</span><span class="o">)</span>
+</pre></div>
+</div>
+</div><p>You can also supply Lean with your own type signature, just to verify internal consistency of your thinking.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=#check%20((%CE%BB%20(a%20:%20nat),%20a%20+%20a)%20:%20(nat%20%E2%86%92%20nat))" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="k">#check</span> <span class="o">((</span><span class="bp">&#955;</span> <span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">nat</span><span class="o">),</span> <span class="n">a</span> <span class="bp">+</span> <span class="n">a</span><span class="o">)</span> <span class="o">:</span> <span class="o">(</span><span class="n">nat</span> <span class="bp">&#8594;</span> <span class="n">nat</span><span class="o">))</span>
+</pre></div>
+</div>
+</div><p>Now, the first substantial difference between lean and other functional languages is that you can give a name to the first parameter of your function in the type signautre.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=#check%20((%CE%BB%20(a%20:%20nat),%20a%20+%20a)%20:%20(%E2%88%80%20(a%20:%20nat),%20nat))" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="k">#check</span> <span class="o">((</span><span class="bp">&#955;</span> <span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">nat</span><span class="o">),</span> <span class="n">a</span> <span class="bp">+</span> <span class="n">a</span><span class="o">)</span> <span class="o">:</span> <span class="o">(</span><span class="bp">&#8704;</span> <span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">nat</span><span class="o">),</span> <span class="n">nat</span><span class="o">))</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="exercise">
+<h2>3.2. Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">&#182;</a></h2>
+<p>This is just a part of a bigger idea, but it&#8217;s important, and we should practice it. Can you supply the following function with a correct type signature, naming each parameter? Is it legal to use other letters than <cite>a</cite> and <cite>b</cite>? You can type &#8704; like this &#8220;forall&#8221;.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0A#check%20((%CE%BB%20(a%20b%20:%20nat),%203%20*%20a%20+%20b))%0A%0A--%20END%0A#check%20((%CE%BB%20(a%20b%20:%20nat),%203%20*%20a%20+%20b)%20:%20(%E2%88%80%20(a%20b%20:%20nat),%20nat))" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="k">#check</span> <span class="o">((</span><span class="bp">&#955;</span> <span class="o">(</span><span class="n">a</span> <span class="n">b</span> <span class="o">:</span> <span class="n">nat</span><span class="o">),</span> <span class="mi">3</span> <span class="bp">*</span> <span class="n">a</span> <span class="bp">+</span> <span class="n">b</span><span class="o">))</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="values-as-types">
+<h2>3.3. Values as types<a class="headerlink" href="#values-as-types" title="Permalink to this headline">&#182;</a></h2>
+<p>So far so good. The second big idea, and the first time I saw this it blew my mind, is that values (things to the left of the colons), can in fact, in some circumstances, become types (things to the right of the colons). This idea is unfortunately more difficult to introduce than the previous idea. We can turn to a trite &#8220;animal farm&#8221; example from the world of object-oriented programming.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=#check%20((%CE%BB%20animal%20:%20Type,%20%CE%BB%20cat%20:%20animal,%20cat)%0A%20%20%20%20:%20%E2%88%80%20(animal%20:%20Type)%20(cat%20:%20animal),%20animal)" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="k">#check</span> <span class="o">((</span><span class="bp">&#955;</span> <span class="n">animal</span> <span class="o">:</span> <span class="kt">Type</span><span class="o">,</span> <span class="bp">&#955;</span> <span class="n">cat</span> <span class="o">:</span> <span class="n">animal</span><span class="o">,</span> <span class="n">cat</span><span class="o">)</span>
+    <span class="o">:</span> <span class="bp">&#8704;</span> <span class="o">(</span><span class="n">animal</span> <span class="o">:</span> <span class="kt">Type</span><span class="o">)</span> <span class="o">(</span><span class="n">cat</span> <span class="o">:</span> <span class="n">animal</span><span class="o">),</span> <span class="n">animal</span><span class="o">)</span>
+</pre></div>
+</div>
+</div><p>Can you turn my trite example into something a bit less dull? Haggis cake &amp; ice cream both come to mind&#8230;</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20Your%20creative%20%22values%20as%20types%22%20example%20comes%20here." target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="c1">-- Your creative &quot;values as types&quot; example comes here.</span>
+</pre></div>
+</div>
+</div><p>Again, just like the idea of naming parameters in type signatures, &#8220;values as types&#8221; is pretty much useless on its own. We need two more ideas to even begin talking about the goal of the tutorial. The first idea is called &#8220;inductive types&#8221;. But let&#8217;s not talk about those until later on in the tutorial. The second idea is called &#8220;propositions as types&#8221;, and it&#8217;s the &#8220;thought experiment&#8221; I&#8217;ve alluded to in the introduction to this tutorial, and that&#8217;s how it all fits together.</p>
+</div>
+<div class="section" id="id2">
+<h2>3.4. Propositions as types<a class="headerlink" href="#id2" title="Permalink to this headline">&#182;</a></h2>
+<p>In order to do mathematics in lean we will need a special type, called <cite>Prop</cite>. You can think of it like <cite>nat</cite>, but instead of numbers, this type represents propositions, i.e. statements to which we can assign truth judgments. Examples of propositions are &#8220;3 is an even number&#8221; (untrue), &#8220;Mandy ate icecream last Friday&#8221; (we have to ask Mandy!) or &#8220;Sam knows the definition of a tensor&#8221; (true).</p>
+</div>
+<div class="section" id="id3">
+<h2>3.5. Exercise<a class="headerlink" href="#id3" title="Permalink to this headline">&#182;</a></h2>
+<p>If p is any proposition, <cite>p : Prop</cite>, we are going to say that the proof of <cite>p</cite> will be any value of type <cite>p</cite>, <cite>proof_of_p : p</cite>. It&#8217;s really that simple, and most importantly, lots of smart people thought about it for a long time, and it appears to be an entirely sensible defition of &#8220;proof&#8221;! We can begin with something relatively easy. We are going to assume that when Mandy has ice-cream, she eats it. Further, we will assume that when Mandy eats ice cream she is happy. In the next exercise you will produce a mathematical proof of Mandy&#8217;s happiness given her pocession of icecream. Let&#8217;s see!</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20BEGIN%0A%0Adef%20Mandy_and_icecream%20:%20(%E2%88%80%20(Mandy_has_icecream%20:%20Prop)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20(Mandy_eats_icecream%20:%20Prop)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20(Mandy_is_happy%20:%20Prop)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20(Mandy_rule_1%20:%20Mandy_has_icecream%20%E2%86%92%20Mandy_eats_icecream)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20(Mandy_rule_2%20:%20Mandy_eats_icecream%20%E2%86%92%20Mandy_is_happy),%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Mandy_has_icecream%20%E2%86%92%20Mandy_is_happy)%20:=%0A%20%20%20%20%CE%BB%20(Mandy_has_icecream%0A%20%20%20%20%20%20%20%20Mandy_eats_icecream%0A%20%20%20%20%20%20%20%20Mandy_is_happy%20:%20Prop)%0A%20%20%20%20%20%20%20%20(Mandy_rule_1%20:%20Mandy_has_icecream%20%E2%86%92%20Mandy_eats_icecream)%0A%20%20%20%20%20%20%20%20(Mandy_rule_2%20:%20Mandy_eats_icecream%20%E2%86%92%20Mandy_is_happy),%0A%20%20%20%20%20%20%20%20%CE%BB%20ice_cream_evidence%20:%20Mandy_has_icecream,%0A%20%20%20%20%20%20%20%20%20%20%20%20sorry%20--%20can%20you%20show%20that%20Mandy%20is%20happy?%0A%0A--%20END%0A%0Adef%20Mandy_and_icecream_solution%20:%20(%E2%88%80%20(Mandy_has_icecream%20:%20Prop)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20(Mandy_eats_icecream%20:%20Prop)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20(Mandy_is_happy%20:%20Prop)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20(Mandy_rule_1%20:%20Mandy_has_icecream%20%E2%86%92%20Mandy_eats_icecream)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20(Mandy_rule_2%20:%20Mandy_eats_icecream%20%E2%86%92%20Mandy_is_happy),%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Mandy_has_icecream%20%E2%86%92%20Mandy_is_happy)%20:=%0A%20%20%20%20%CE%BB%20(Mandy_has_icecream%0A%20%20%20%20%20%20%20%20Mandy_eats_icecream%0A%20%20%20%20%20%20%20%20Mandy_is_happy%20:%20Prop)%0A%20%20%20%20%20%20%20%20(Mandy_rule_1%20:%20Mandy_has_icecream%20%E2%86%92%20Mandy_eats_icecream)%0A%20%20%20%20%20%20%20%20(Mandy_rule_2%20:%20Mandy_eats_icecream%20%E2%86%92%20Mandy_is_happy),%0A%20%20%20%20%20%20%20%20%CE%BB%20ice_cream_evidence%20:%20Mandy_has_icecream,%0A%20%20%20%20%20%20%20%20%20%20%20%20Mandy_rule_2%20(Mandy_rule_1%20ice_cream_evidence)" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">Mandy_and_icecream</span> <span class="o">:</span> <span class="o">(</span><span class="bp">&#8704;</span> <span class="o">(</span><span class="n">Mandy_has_icecream</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span>
+                        <span class="o">(</span><span class="n">Mandy_eats_icecream</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span>
+                        <span class="o">(</span><span class="n">Mandy_is_happy</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span>
+                        <span class="o">(</span><span class="n">Mandy_rule_1</span> <span class="o">:</span> <span class="n">Mandy_has_icecream</span> <span class="bp">&#8594;</span> <span class="n">Mandy_eats_icecream</span><span class="o">)</span>
+                        <span class="o">(</span><span class="n">Mandy_rule_2</span> <span class="o">:</span> <span class="n">Mandy_eats_icecream</span> <span class="bp">&#8594;</span> <span class="n">Mandy_is_happy</span><span class="o">),</span>
+                        <span class="n">Mandy_has_icecream</span> <span class="bp">&#8594;</span> <span class="n">Mandy_is_happy</span><span class="o">)</span> <span class="o">:=</span>
+    <span class="bp">&#955;</span> <span class="o">(</span><span class="n">Mandy_has_icecream</span>
+        <span class="n">Mandy_eats_icecream</span>
+        <span class="n">Mandy_is_happy</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span>
+        <span class="o">(</span><span class="n">Mandy_rule_1</span> <span class="o">:</span> <span class="n">Mandy_has_icecream</span> <span class="bp">&#8594;</span> <span class="n">Mandy_eats_icecream</span><span class="o">)</span>
+        <span class="o">(</span><span class="n">Mandy_rule_2</span> <span class="o">:</span> <span class="n">Mandy_eats_icecream</span> <span class="bp">&#8594;</span> <span class="n">Mandy_is_happy</span><span class="o">),</span>
+        <span class="bp">&#955;</span> <span class="n">ice_cream_evidence</span> <span class="o">:</span> <span class="n">Mandy_has_icecream</span><span class="o">,</span>
+            <span class="n">sorry</span> <span class="c1">-- can you show that Mandy is happy?</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="notation-tricks">
+<h2>3.6. Notation tricks<a class="headerlink" href="#notation-tricks" title="Permalink to this headline">&#182;</a></h2>
+<p>As you can see there&#8217;s a lot of clutter in the example above. Lots of parameter names are unnecessarily repeated, specifically because we&#8217;re using the &#8220;named parameters&#8221; trick. Unlike in some of the examples before, we must the &#8220;named parameters&#8221; trick, because otherwise we can&#8217;t use the &#8220;values as types&#8221; trick, and consequently we can&#8217;t encode proofs of our propositions as relevant types. However, unnecessary clutter is unnessary clutter, and Lean provides us with ways to make things look better. One way is through variables. The code below is equivalent with the code above</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=variable%20(Mandy_has_icecream%20:%20Prop)%0Avariable%20(Mandy_eats_icecream%20:%20Prop)%0Avariable%20(Mandy_is_happy%20:%20Prop)%0Avariable%20(Mandy_rule_1%20:%20Mandy_has_icecream%20%E2%86%92%20Mandy_eats_icecream)%0Avariable%20(Mandy_rule_2%20:%20Mandy_eats_icecream%20%E2%86%92%20Mandy_is_happy)%0A%0Adef%20Mandy_and_icecream2%20:%20Mandy_has_icecream%20%E2%86%92%20Mandy_is_happy%20:=%0A%20%20%20%20%CE%BB%20ice_cream_evidence%20:%20Mandy_has_icecream,%0A%20%20%20%20%20%20%20%20sorry%20--%20you%20should%20be%20able%20to%20show%20that%20Mandy%20is%20happy%20using%20exactly%20the%20same%20code%20as%20before" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">variable</span> <span class="o">(</span><span class="n">Mandy_has_icecream</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span>
+<span class="kd">variable</span> <span class="o">(</span><span class="n">Mandy_eats_icecream</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span>
+<span class="kd">variable</span> <span class="o">(</span><span class="n">Mandy_is_happy</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span>
+<span class="kd">variable</span> <span class="o">(</span><span class="n">Mandy_rule_1</span> <span class="o">:</span> <span class="n">Mandy_has_icecream</span> <span class="bp">&#8594;</span> <span class="n">Mandy_eats_icecream</span><span class="o">)</span>
+<span class="kd">variable</span> <span class="o">(</span><span class="n">Mandy_rule_2</span> <span class="o">:</span> <span class="n">Mandy_eats_icecream</span> <span class="bp">&#8594;</span> <span class="n">Mandy_is_happy</span><span class="o">)</span>
+
+<span class="kd">def</span> <span class="n">Mandy_and_icecream2</span> <span class="o">:</span> <span class="n">Mandy_has_icecream</span> <span class="bp">&#8594;</span> <span class="n">Mandy_is_happy</span> <span class="o">:=</span>
+    <span class="bp">&#955;</span> <span class="n">ice_cream_evidence</span> <span class="o">:</span> <span class="n">Mandy_has_icecream</span><span class="o">,</span>
+        <span class="n">sorry</span> <span class="c1">-- you should be able to show that Mandy is happy using exactly the same code as before</span>
+</pre></div>
+</div>
+</div><p>A word of warning. You might be tempted to think of variables as python or C++ variables. Don&#8217;t. They really are just parameters into the function <cite>Mandy_and_ice_cream2</cite>, which you can verify with <cite>#check Mandy_and_icecream2</cite>, but are written outside of that function&#8217;s defition and can be used across functions.</p>
+<p>Another method to get rid of clutter is through moving the colon after the function name all the way to the right (and removing the &#8704;), like this:</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=def%20Mandy_and_icecream3%20(Mandy_has_icecream%20:%20Prop)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20(Mandy_eats_icecream%20:%20Prop)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20(Mandy_is_happy%20:%20Prop)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20(Mandy_rule_1%20:%20Mandy_has_icecream%20%E2%86%92%20Mandy_eats_icecream)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20(Mandy_rule_2%20:%20Mandy_eats_icecream%20%E2%86%92%20Mandy_is_happy)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20:%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Mandy_has_icecream%20%E2%86%92%20Mandy_is_happy%20:=%0A%20%20%20%20%CE%BB%20ice_cream_evidence%20:%20Mandy_has_icecream,%0A%20%20%20%20%20%20%20%20sorry%20--%20you%20should%20be%20able%20to%20show%20that%20Mandy%20is%20happy%20using%20exactly%20the%20same%20code." target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">Mandy_and_icecream3</span> <span class="o">(</span><span class="n">Mandy_has_icecream</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span>
+                        <span class="o">(</span><span class="n">Mandy_eats_icecream</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span>
+                        <span class="o">(</span><span class="n">Mandy_is_happy</span> <span class="o">:</span> <span class="kt">Prop</span><span class="o">)</span>
+                        <span class="o">(</span><span class="n">Mandy_rule_1</span> <span class="o">:</span> <span class="n">Mandy_has_icecream</span> <span class="bp">&#8594;</span> <span class="n">Mandy_eats_icecream</span><span class="o">)</span>
+                        <span class="o">(</span><span class="n">Mandy_rule_2</span> <span class="o">:</span> <span class="n">Mandy_eats_icecream</span> <span class="bp">&#8594;</span> <span class="n">Mandy_is_happy</span><span class="o">)</span>
+                        <span class="o">:</span>
+                        <span class="n">Mandy_has_icecream</span> <span class="bp">&#8594;</span> <span class="n">Mandy_is_happy</span> <span class="o">:=</span>
+    <span class="bp">&#955;</span> <span class="n">ice_cream_evidence</span> <span class="o">:</span> <span class="n">Mandy_has_icecream</span><span class="o">,</span>
+        <span class="n">sorry</span> <span class="c1">-- you should be able to show that Mandy is happy using exactly the same code.</span>
+</pre></div>
+</div>
+</div><p>There is one more example worth looking at just now, although you won&#8217;t be able to fully understand it until you&#8217;ve studied inductive types to a level beyond this tutorial.</p>
+</div>
+<div class="section" id="id4">
+<h2>3.7. Exercise<a class="headerlink" href="#id4" title="Permalink to this headline">&#182;</a></h2>
+<p>Consider for example two variables <cite>a : nat</cite> and <cite>b : nat</cite>. Lean has a special, function-like thingy (actually an inductive type), called <cite>eq</cite>. Can you check what is the type of <cite>eq a b</cite>? Given the type information, what do you think you&#8217;ll be able to do with it?</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=variable%20a%20:%20nat%0Avariable%20b%20:%20nat%0A%0A--%20Here%20you%20can%20check%20the%20type%20of%20%60eq%20a%20b%60." target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">variable</span> <span class="n">a</span> <span class="o">:</span> <span class="n">nat</span>
+<span class="kd">variable</span> <span class="n">b</span> <span class="o">:</span> <span class="n">nat</span>
+
+<span class="c1">-- Here you can check the type of `eq a b`.</span>
+</pre></div>
+</div>
+</div><p>variable proof_of_a_equals_b : eq a b</p>
+<p>What is the type of <cite>proof_of_a_equals_b</cite>? Could you tell without <cite>#check</cite>?</p>
+<p>Typing <cite>eq a b</cite> is not very natural. Lean provides with alternative syntax, <cite>a = b</cite>. Sometimes you might have to translate in your head between <cite>eq a b</cite> and <cite>a = b</cite>, but most of the time the latter is easier to work with.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=variable%20c%20:%20nat%0Avariable%20d%20:%20nat%0A%0Avariable%20proof_of_c_equals_d%20:%20c%20=%20d" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">variable</span> <span class="n">c</span> <span class="o">:</span> <span class="n">nat</span>
+<span class="kd">variable</span> <span class="n">d</span> <span class="o">:</span> <span class="n">nat</span>
+
+<span class="kd">variable</span> <span class="n">proof_of_c_equals_d</span> <span class="o">:</span> <span class="n">c</span> <span class="bp">=</span> <span class="n">d</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id5">
+<h2>3.8. Exercise<a class="headerlink" href="#id5" title="Permalink to this headline">&#182;</a></h2>
+<p>Lean provides us with a function <cite>eq.trans</cite>. Can you check its type signature and use it to prove that <cite>e = g</cite>?</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=def%20e_equals_g%20(e%20:%20nat)%20(f%20:%20nat)%20(g%20:%20nat)%20(e_equals_f%20:%20e%20=%20f)%20(f_equals_g%20:%20f%20=%20g)%20:%20e%20=%20g%20:=%0A%20%20%20%20sorry%0A%0Adef%20e_equals_g_solution%20(e%20:%20nat)%20(f%20:%20nat)%20(g%20:%20nat)%20(e_equals_f%20:%20e%20=%20f)%20(f_equals_g%20:%20f%20=%20g)%20:%20e%20=%20g%20:=%0A%20%20%20%20eq.trans%20e_equals_f%20f_equals_g" target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="kd">def</span> <span class="n">e_equals_g</span> <span class="o">(</span><span class="n">e</span> <span class="o">:</span> <span class="n">nat</span><span class="o">)</span> <span class="o">(</span><span class="n">f</span> <span class="o">:</span> <span class="n">nat</span><span class="o">)</span> <span class="o">(</span><span class="n">g</span> <span class="o">:</span> <span class="n">nat</span><span class="o">)</span> <span class="o">(</span><span class="n">e_equals_f</span> <span class="o">:</span> <span class="n">e</span> <span class="bp">=</span> <span class="n">f</span><span class="o">)</span> <span class="o">(</span><span class="n">f_equals_g</span> <span class="o">:</span> <span class="n">f</span> <span class="bp">=</span> <span class="n">g</span><span class="o">)</span> <span class="o">:</span> <span class="n">e</span> <span class="bp">=</span> <span class="n">g</span> <span class="o">:=</span>
+    <span class="n">sorry</span>
+
+<span class="kd">def</span> <span class="n">e_equals_g_solution</span> <span class="o">(</span><span class="n">e</span> <span class="o">:</span> <span class="n">nat</span><span class="o">)</span> <span class="o">(</span><span class="n">f</span> <span class="o">:</span> <span class="n">nat</span><span class="o">)</span> <span class="o">(</span><span class="n">g</span> <span class="o">:</span> <span class="n">nat</span><span class="o">)</span> <span class="o">(</span><span class="n">e_equals_f</span> <span class="o">:</span> <span class="n">e</span> <span class="bp">=</span> <span class="n">f</span><span class="o">)</span> <span class="o">(</span><span class="n">f_equals_g</span> <span class="o">:</span> <span class="n">f</span> <span class="bp">=</span> <span class="n">g</span><span class="o">)</span> <span class="o">:</span> <span class="n">e</span> <span class="bp">=</span> <span class="n">g</span> <span class="o">:=</span>
+    <span class="n">eq.trans</span> <span class="n">e_equals_f</span> <span class="n">f_equals_g</span>
+</pre></div>
+</div>
+</div></div>
+<div class="section" id="id6">
+<h2>3.9. Exercise<a class="headerlink" href="#id6" title="Permalink to this headline">&#182;</a></h2>
+<p>Can you come up with your own exercise using <cite>eq.symm</cite>? Again, you&#8217;ll have to check its type signature before you start playing with it.</p>
+<div style="position: relative">
+<div style='position: absolute; right: 0; top: 0; padding: 1ex'><a href="https://leanprover.github.io/live/3.4.1/#code=--%20your%20own%20exercise%20using%20%60eq.symm%60%20comes%20here." target="_blank">
+try it!</a></div><div class="highlight-lean notranslate"><div class="highlight"><pre><span class="c1">-- your own exercise using `eq.symm` comes here.</span>
+</pre></div>
+</div>
+</div><p>There are other interesting things you can do with <cite>Prop</cite> (almost anything in maths?), all beyond the scope of this tutorial, but you can check out the chapter 3 of <a class="reference external" href="https://leanprover.github.io/theorem_proving_in_lean/propositions_and_proofs.html">Theorem proving in lean</a>.</p>
+</div>
+<div class="section" id="summary">
+<h2>3.10. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">&#182;</a></h2>
+<p>In order to do maths in lean, we need the following 4 ideas:</p>
+<ol class="arabic simple">
+<li>named parameters in function signatures</li>
+<li>values as types</li>
+<li>propositions as types</li>
+<li>inductive types</li>
+</ol>
+<p>In the next section we&#8217;ll make a quick overview of inductive types and move straight to the final goal of this tutorial, showing that <cite>a + b = b + a</cite>.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Lean for hungry Graspers</a></h1>
+
+
+
+
+
+
+
+
+<!-- <h3>Navigation</h3> -->
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions_and_types.html">2. Functions and types</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. Propositions as types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#named-values-in-type-signatures">3.1. Named values in type signatures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercise">3.2. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#values-as-types">3.3. Values as types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">3.4. Propositions as types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">3.5. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#notation-tricks">3.6. Notation tricks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">3.7. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">3.8. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">3.9. Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">3.10. Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="commutativity_of_addition.html">4. Commutativity of addition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements.html">5. Acknowledgements</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://leanprover.github.io/theorem_proving_in_lean/">Theorem Proving in Lean</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Adam Kurkiewicz. This work is licensed under a Creative Commons Attribution 4.0 International License.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="_sources/propositions_as_types.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
