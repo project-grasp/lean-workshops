@@ -190,9 +190,9 @@ Summary
 
 In order to do maths in lean, we need the following 4 ideas:
 
-1. named parameters
+1. named parameters in function signatures
 2. values as types
 3. propositions as types
 4. inductive types
 
--- In the next section we'll make a quick overview of inductive types and move straight to the final goal of this tutorial, showing that `a + b = b + a`.
+In the next section we'll make a quick overview of inductive types and move straight to the final goal of this tutorial, showing that `a + b = b + a`.
