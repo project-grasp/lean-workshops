@@ -6,9 +6,9 @@ Functions and types
 Exercise
 -----------
 
-Like almost any programming language, lean has functions.
+Like almost any programming language, Lean has functions.
 
-`double` for example is a function. When you're ready, press `try it!` in the top-right corner of the code box below. What you should see is an interactive lean session. You can use for the the rest of the workshop. 
+`double` for example is a function. When you're ready, press `try it!` in the top-right corner of the code box below. What you should see is an interactive Lean session. You can use for the the rest of the workshop. 
 
 .. code-block:: lean
 

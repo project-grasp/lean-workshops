@@ -38,7 +38,7 @@ Can you construct 2, 4 and 0?
 Defition of addition
 ---------------------
 
-Let's define addition now. We will have to use an important "magic" ingredient of inductive types: recursors. These are automatically generated for any inductive type, and are part of the low-level machinery, which gives lean both of the capabilities discussed in the introduction. We can use `natural.rec_on x` to prove or define things about `x`, as long as we allow for the possiblity that `x` can be either of a `zero` kind or of a `succ` kind. This is one good way to start defining addition:
+Let's define addition now. We will have to use an important "magic" ingredient of inductive types: recursors. These are automatically generated for any inductive type, and are part of the low-level machinery, which gives Lean both of the capabilities discussed in the introduction. We can use `natural.rec_on x` to prove or define things about `x`, as long as we allow for the possiblity that `x` can be either of a `zero` kind or of a `succ` kind. This is one good way to start defining addition:
 
 .. code-block:: lean
 
@@ -89,7 +89,7 @@ There is exactly one more good way to define addition (at least as far as I can 
 Back to nat
 -------------
 
-The good news is that all these definitions are already provided in lean, together with some syntactic sugar, such as allowing us to type `a + b` instead of `addition a b`, and use actual Hindu-Arabic numerals as opposed to chains of `succ`s, so for the rest of the tutorial we can just revert back to the good old `nat`.
+The good news is that all these definitions are already provided in Lean, together with some syntactic sugar, such as allowing us to type `a + b` instead of `addition a b`, and use actual Hindu-Arabic numerals as opposed to chains of `succ`s, so for the rest of the tutorial we can just revert back to the good old `nat`.
 
 We can repeat our experiment with addition and `#reduce`, this time using more human-friendly notation. What is the most important observation you can take from this experiment?
 
