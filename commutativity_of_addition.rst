@@ -249,7 +249,7 @@ Can you prove the following two lemmas? The first one is very easy.
 
     def successor_over_sum_solution (a : nat) (b : nat) : a + nat.succ b = nat.succ (a + b) := rfl
 
-For the second, you will have to use a recursor
+For the second, you will have to use a recursor.
 
 .. code-block:: lean
 
@@ -264,14 +264,12 @@ For the second, you will have to use a recursor
         have X : nat.succ (nat.succ a + prev_b) = nat.succ (nat.succ (a + prev_b)), from succ_over_equality IH,
         X)
 
-.. code-block:: lean
-
 And eventually, our final goal!
 
 .. code-block:: lean
 
     -- BEGIN
-    def addition_is_commutative (a b : nat) a + b = b + a
+    def addition_is_commutative (a b : nat) a + b = b + a := sorry
     -- END
 
     def addition_is_commutative_solution (a b : nat) : a + b = b + a :=
