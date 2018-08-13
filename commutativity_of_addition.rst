@@ -4,10 +4,13 @@ Commutativity of addition
 ===========================
 
 
-Recall that our original motivation is proving that `a + b = b + a`. This property of addition is called "commutativity", and if decide to carry on with your mathematical education at University level, you'll hear much more about.
+Inductive types
+----------------
+
+Recall that our original motivation is proving that `a + b = b + a`. This property of addition is called "commutativity", and if you decide to carry on with your mathematical education at University level, you'll hear much more about.
 
 
-But for now, let's focus on the task, showing that `a + b = b + a`. Technically, it would seem we've already got all the required ingeredients to make progress on this task. We know about `eq` or `=`. We know that `a` and `b` are of type `nat`. We know about `+`. However, it turns out that in order to prove `a + b = b + a`, we have to deepen our understanding of both `nat` and `+`. It turns out that `nat`, unlike corresponding concepts in other programming languages, is not primitive, i.e. it is defined in Lean using more fundamental concepts (specifically, inductive types). Let's roll our own `nat`, and to avoid name clashing, let's call it `natural`.
+But for now, let's focus on the task. Technically, it would seem we've already got all the required ingeredients to make progress. We know about `eq` or `=`. We know that `a` and `b` are of type `nat`. We know about `+`. However, it turns out that in order to prove `a + b = b + a`, we have to deepen our understanding of both `nat` and `+`. It turns out that `nat`, unlike corresponding concepts in other programming languages, is not primitive, i.e. it is defined in Lean using more fundamental concepts (specifically, inductive types). Let's roll our own `nat`, and to avoid name clashing, let's call it `natural`.
 
 .. code-block:: lean
     
