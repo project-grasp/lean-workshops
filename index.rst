@@ -7,6 +7,7 @@ Lean for hungry Graspers
 
     introduction
     functions_and_types
+    propositions_as_types
     acknowledgements
 
 .. Indices and tables
