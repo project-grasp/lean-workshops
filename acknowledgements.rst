@@ -11,7 +11,7 @@ Thanks to the authors of "Theorem Proving In Lean" for the inspiration behind th
 
 Thanks to Skyscanner for funding the creation of this tutorial as part of their "One Day" initiative.
 
-Thanks to Kevin Buzzard for creating & sharing `a very different tutorial on a very similar topic https://xenaproject.wordpress.com/2017/10/31/building-the-non-negative-integers-from-scratch/`_.
+Thanks to Kevin Buzzard for creating & sharing `a very different tutorial on a very similar topic <https://xenaproject.wordpress.com/2017/10/31/building-the-non-negative-integers-from-scratch/>`_.
 
 Thanks to the `Zulip chat community <https://leanprover.zulipchat.com/>`_ for very quick troubleshooting of any difficulties I had with learning and undesrtanding lean.
 
