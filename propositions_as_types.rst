@@ -32,6 +32,7 @@ This is just a part of a bigger idea, but it's important, and we should practice
 
 
 .. code-block:: lean
+    
     -- BEGIN
     #check ((λ (a b : nat), 3 * a + b))
 
