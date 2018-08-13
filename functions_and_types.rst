@@ -98,6 +98,7 @@ Exercise
 Can you check the type signature of the expression `triple_first_and_add 42` (Warning, that's a loaded question)? What do you expect it to be? What do you expect it to evaluate to when evaluated with `#reduce`?
 
 .. code-block:: lean
+
     -- BEGIN
     -- your code checks go here
     -- END
